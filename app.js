@@ -9,18 +9,18 @@ chrome.storage.local.get(["WikiHelperisActive"]).then((result) => {
     }
 });
 
+function handleCopyEvent(e) {
+    var text = window.getSelection().toString().trim();
+    e.clipboardData.setData('text/plain', text);
+    e.preventDefault();
+}
+
 function addEventOnCopy() {
-    document.addEventListener('copy', function(e){
-        var text = window.getSelection().toString().trim();
-        e.clipboardData.setData('text/plain', text);
-        e.preventDefault();
-    });
-    //console.log('eventAdded');
+    document.addEventListener('copy', handleCopyEvent);
 }
 
 function removeEventOnCopy() {
-    document.removeEventListener('copy', addEventOnCopy);
-    //console.log('eventRemoved');
+    document.removeEventListener('copy', handleCopyEvent);
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
