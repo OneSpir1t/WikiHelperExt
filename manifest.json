@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "WikiHelper-Extention",
+    "version": "0.0.1",
+    "description": "Helper For wiki.lex.lan",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://wiki.lex.lan/*"
+            ],
+            "all_frames": false,
+            "js": ["app.js"]
+        }
+    ],
+    "host_permissions": ["http://wiki.lex.lan/*"],
+    "web_accessible_resources": [
+        {
+            "resources": ["content-main-script.css"],
+            "matches": ["http://wiki.lex.lan/*"]
+        }
+    ],
+    "action": {
+        "default_popup":"popup.html"
+    },
+    "permissions": [
+        "storage"
+    ]
+}
