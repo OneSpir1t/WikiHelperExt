@@ -12,17 +12,22 @@
             "js": ["app.js"]
         }
     ],
-    "host_permissions": ["http://wiki.lex.lan/*"],
+    "host_permissions": ["<all_urls>"],
     "web_accessible_resources": [
         {
             "resources": ["content-main-script.css"],
             "matches": ["http://wiki.lex.lan/*"]
         }
     ],
+    "externally_connectable": {
+        "matches": ["http://wiki.lex.lan/*"]
+    },
     "action": {
         "default_popup":"popup.html"
     },
     "permissions": [
-        "storage"
-    ]
+        "storage",
+        "scripting"
+    ],
+    "background": {"service_worker": "background.js"}
 }

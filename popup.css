@@ -1,4 +1,159 @@
+/* Основные стили для body */
 body {
-    text-align:center;
-    width:200px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f4f8;
+    color: #333;
+    width: 400px;
 }
+
+/* Стили для контейнера настроек */
+#settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#settings strong {
+    font-size: 18px;
+}
+
+/* Стили для переключателя */
+#CustomToggle {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.toggle span {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: left 0.3s;
+}
+
+input[type="checkbox"]:checked + .toggle span {
+    left: 28px;
+    background-color: #4caf50;
+}
+
+#versionsDivContainer{
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+/* Стили для блока с версиями */
+#versionsDiv {
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    max-height: 100%; /* Достаточно большая высота для отображения содержимого */
+}
+
+#versionsDiv.collapsed {
+    margin-top: 0;
+    max-height: 0;
+}
+
+.versionsDiv {
+    width: 40%;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.versionsDiv strong {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.versionsDiv div {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    width: 100%; /* Убедитесь, что блок занимает 100% доступной ширины */
+    max-width: 100%; /* Отключение горизонтального расширения */
+    overflow: hidden; /* Отключение горизонтальной и вертикальной прокрутки */
+    white-space: normal; /* Разрешает перенос строк */
+    word-wrap: break-word; /* Перенос длинных слов */
+    overflow-wrap: break-word; /* Перенос длинных слов */
+    text-overflow: ellipsis; /* Отображение многоточия, если текст выходит за пределы */
+}
+
+/* Стили для кнопки сворачивания/разворачивания */
+#toggleButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#toggleButton:hover {
+    background-color: #0056b3;
+}
+
+.collapsed {
+    max-height: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+#preloaderContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    color: #f03355;
+    background:
+      conic-gradient(from  -45deg at top    20px left 50% ,#0000 ,currentColor 1deg 90deg,#0000 91deg),
+      conic-gradient(from   45deg at right  20px top  50% ,#0000 ,currentColor 1deg 90deg,#0000 91deg),
+      conic-gradient(from  135deg at bottom 20px left 50% ,#0000 ,currentColor 1deg 90deg,#0000 91deg),
+      conic-gradient(from -135deg at left   20px top  50% ,#0000 ,currentColor 1deg 90deg,#0000 91deg);
+    animation: l4 1.5s infinite cubic-bezier(0.3,1,0,1);
+  }
+  @keyframes l4 {
+     50%  {width:60px;height: 60px;transform: rotate(180deg)}
+     100% {transform: rotate(360deg)}
+  }

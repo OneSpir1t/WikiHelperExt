@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>Wiki Helper</title>
         <link rel="stylesheet" type="text/css" href="popup.css"/>
+        <script type="text/javascript" src="popup.js"></script>
     </head>
     <body>
-        <input id="WikiHelperisActive" type="checkbox"> 
-        <!-- <div id="versionsDiv" width="100%">
-            <input type="text" height="50%">
-            <input type="text" height="50%">
-        </div> -->
-        <script type="text/javascript" src="popup.js"></script>
+        <div id="preloaderContainer">
+            <div id="preloader" class="loader"></div>
+        </div>
+        <div id="mainContent" class="hidden">
+            <div id="settings">
+                <strong>Удаление лишних пробелов</strong>
+                <div id="CustomToggle">
+                    <input class="WikiHelperIsCutActive" type="checkbox" id="cbx" style="display:none"/>
+                    <label for="cbx" class="toggle"><span></span></label>    
+                </div>
+            </div>
+            <div id="versionsDivContainer">
+                <button id="toggleButton">Свернуть</button> 
+                <div id="versionsDiv">
+                    <div class="versionsDiv">
+                        <strong>old versions</strong>
+                        <div id="verticalTextBox" contenteditable="true">
+                            Введите текст сюда.
+                        </div>
+                    </div>
+                    <div class="versionsDiv">
+                        <strong>new versions</strong>
+                        <div id="verticalTextBox" contenteditable="true">
+                            Введите текст сюда.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
