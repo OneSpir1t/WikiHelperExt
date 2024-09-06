@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(!controls.content) return;
 
-    chrome.storage.local.get(["WikiHelperIsCutActive", "WikiHelperIsToggled"]).then((result) => {
+    chrome.storage.local.get(["WikiHelperIsCutActive", "WikiHelperIsToggled", "WikiHelperOldVSettings", "WikiHelperNewVSettings", "WikiHelperOldVText", "WikiHelperNewVText"]).then((result) => {
         Object.assign(CurrentState, result);
         ManiSettingsInit();
         versionSettingInit();
+        verticalTextBoxesSettingsInit()
         hidePreLoader();
     });
 });
@@ -68,6 +69,8 @@ async function setControls() {
     const preloader = document.getElementById("preloader");
     const content = document.getElementById("mainContent");
     const preloaderContainer = document.getElementById("preloaderContainer");
+    const verticalTextBoxNewV = document.getElementById("verticalTextBoxNewV");
+    const verticalTextBoxOldV = document.getElementById("verticalTextBoxOldV");
     const controlsToAdd = {};
     controlsToAdd.Cutcheckbox = Cutcheckbox;
     controlsToAdd.toggleButton = toggleButton;
@@ -75,6 +78,8 @@ async function setControls() {
     controlsToAdd.preloader = preloader;
     controlsToAdd.content = content;
     controlsToAdd.preloaderContainer = preloaderContainer;
+    controlsToAdd.verticalTextBoxNewV = verticalTextBoxNewV;
+    controlsToAdd.verticalTextBoxOldV = verticalTextBoxOldV;
     Object.keys(controlsToAdd).forEach(key => {
         if (!(key in controls)) {
             controls[key] = controlsToAdd[key];
@@ -93,3 +98,50 @@ function hidePreLoader() {
         controls.content.classList.remove("hidden");
     }
 }
+
+function verticalTextBoxesSettingsInit(){
+    if (CurrentState.WikiHelperOldVText) controls.verticalTextBoxOldV.textContent = CurrentState.WikiHelperOldVText;
+    controls.verticalTextBoxOldV.addEventListener('keypress', TextBoxOldVersionEventHandler);
+}
+
+function TextBoxNewVersionEventHandler() {
+    let textContent = controls.verticalTextBoxOldV.textContent.trim();
+
+    // Удаляем запятую в конце строки, если она есть
+    if (textContent.endsWith(',')) {
+        textContent = textContent.slice(0, -1);
+    }
+
+    try {
+        const jsonString = `{${textContent}}`;
+        const parsedData = JSON.parse(jsonString);
+        console.log(parsedData);
+    } catch (error) {
+        console.error("Ошибка при парсинге JSON:", error.message);
+    }
+
+    chrome.storage.local.set({ WikiHelperOldVSettings: this.checked })
+    if(this.checked) sendMsg({ WikiHelperIsCutActive: true });
+    else sendMsg({ WikiHelperIsCutActive: false });
+}
+
+function TextBoxOldVersionEventHandler() {
+    let textContent = controls.verticalTextBoxOldV.textContent.trim();
+
+    if (textContent.endsWith(',')) {
+        textContent = textContent.slice(0, -1);
+    }
+    
+    let parsedData = '';
+    try {
+        const jsonString = `{${textContent}}`;
+        parsedData = JSON.parse(jsonString);
+        console.log(parsedData);
+    } catch (error) {
+        console.error("Ошибка при парсинге JSON:", error.message);
+    }
+
+    chrome.storage.local.set({ WikiHelperOldVSettings: parsedData, WikiHelperOldVText: textContent })
+    sendMsg({ WikiHelperOldVSettings: parsedData });
+}
+

@@ -76,7 +76,7 @@ input[type="checkbox"]:checked + .toggle span {
     max-height: 0;
 }
 
-.versionsDiv {
+.versionsDivTextBox {
     width: 40%;
     padding: 20px;
     background-color: #ffffff;
@@ -86,13 +86,13 @@ input[type="checkbox"]:checked + .toggle span {
     height: 100%;
 }
 
-.versionsDiv strong {
+.versionsDivTextBox strong {
     font-size: 16px;
     display: block;
     margin-bottom: 10px;
 }
 
-.versionsDiv div {
+.versionsDivTextBox div {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
