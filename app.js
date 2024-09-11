@@ -5,7 +5,7 @@ window.dispatchEvent(new Event(orphanMessageId));
 window.addEventListener(orphanMessageId, unregisterOrphan);
 chrome.runtime.onMessage.addListener(onMessage);
 
-chrome.storage.local.get(["WikiHelperIsCutActive"]).then((result) => {
+chrome.storage.local.get(["WikiHelperIsCutActive", "WikiHelperOldVSettings", "WikiHelperNewVSettings"]).then((result) => {
     Object.assign(CurrentState, result)
     if (CurrentState?.WikiHelperIsCutActive) addEventOnCopy()
 });

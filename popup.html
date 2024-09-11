@@ -5,6 +5,8 @@
         <title>Wiki Helper</title>
         <link rel="stylesheet" type="text/css" href="popup.css"/>
         <script type="text/javascript" src="popup.js"></script>
+        <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+
     </head>
     <body>
         <div id="preloaderContainer">
@@ -22,15 +24,23 @@
                 <button id="toggleButton">Свернуть</button> 
                 <div id="versionsDiv">
                     <div class="versionsDivTextBox">
-                        <strong>old versions</strong>
-                        <div id="verticalTextBoxOldV" contenteditable="true">
-                            Введите текст сюда.
+                        <div class="infoVersion">
+                            <strong>old versions</strong>
+                            <div class="infoVersionCheckMarkContainer">
+                                <input type="checkbox" id="_checkbox">
+                                <label class="checkMark" for="_checkbox">
+                                    <div id="tick_mark"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="verticalTextBoxOldV" class="TextBox" placeholder="Введите старые версии сюда." contenteditable="true">
                         </div>
                     </div>
                     <div class="versionsDivTextBox">
-                        <strong>new versions</strong>
-                        <div id="verticalTextBoxNewV" contenteditable="true">
-                            Введите текст сюда.
+                        <div class="infoVersion">
+                            <strong>new versions</strong>
+                        </div>
+                        <div id="verticalTextBoxNewV" class="TextBox" placeholder="Введите новые версии сюда." contenteditable="true">
                         </div>
                     </div>
                 </div>

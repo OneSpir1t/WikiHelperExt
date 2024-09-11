@@ -9,7 +9,7 @@
                 "http://wiki.lex.lan/*"
             ],
             "all_frames": false,
-            "js": ["app.js"]
+            "js": ["jquery-3.7.1.min.js","app.js"]
         }
     ],
     "host_permissions": ["<all_urls>"],

@@ -3,6 +3,8 @@ const controls = {};
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const $ = jQuery;
+
     setControls();
 
     if(!controls.content) return;
@@ -13,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         versionSettingInit();
         verticalTextBoxesSettingsInit()
         hidePreLoader();
+        $(".TextBox").focusout(function(){
+            var element = $(this);        
+            if (!element.text().replace(" ", "").length) {
+                element.empty();
+            }
+        });
     });
 });
 
@@ -49,13 +57,14 @@ function toggleButtonEventHandler() {
     controls.versionsDiv.classList.toggle('collapsed');
 
     // Changing the button text depending on the block status
-    if (controls.versionsDiv.classList.contains('collapsed')) controls.toggleButton.textContent = 'Развернуть';
-    else controls.toggleButton.textContent = 'Свернуть';
-
-    if (controls.toggleButton.textContent === 'Развернуть') {
+    if (controls.versionsDiv.classList.contains('collapsed')) {
+        controls.toggleButton.textContent = 'Развернуть';
         chrome.storage.local.set({ WikiHelperIsToggled: true })
     }
-    else chrome.storage.local.set({ WikiHelperIsToggled: false })
+    else {
+        controls.toggleButton.textContent = 'Свернуть';
+        chrome.storage.local.set({ WikiHelperIsToggled: false })
+    }
 }
 
 function isValidChromeRuntime() {
@@ -100,29 +109,33 @@ function hidePreLoader() {
 }
 
 function verticalTextBoxesSettingsInit(){
+    
     if (CurrentState.WikiHelperOldVText) controls.verticalTextBoxOldV.textContent = CurrentState.WikiHelperOldVText;
-    controls.verticalTextBoxOldV.addEventListener('keypress', TextBoxOldVersionEventHandler);
+    else controls.verticalTextBoxOldV.textContent = '';
+
+    if (CurrentState.WikiHelperNewVText) controls.verticalTextBoxNewV.textContent = CurrentState.WikiHelperNewVText;
+    else controls.verticalTextBoxNewV.textContent = '';
+    controls.verticalTextBoxOldV.addEventListener('input', TextBoxOldVersionEventHandler);
+    controls.verticalTextBoxNewV.addEventListener('input', TextBoxNewVersionEventHandler);
 }
 
 function TextBoxNewVersionEventHandler() {
-    let textContent = controls.verticalTextBoxOldV.textContent.trim();
+    let textContent = controls.verticalTextBoxNewV.textContent.trim();
 
-    // Удаляем запятую в конце строки, если она есть
     if (textContent.endsWith(',')) {
         textContent = textContent.slice(0, -1);
     }
-
+    
+    let parsedData = '';
     try {
         const jsonString = `{${textContent}}`;
-        const parsedData = JSON.parse(jsonString);
-        console.log(parsedData);
+        parsedData = JSON.parse(jsonString);
     } catch (error) {
-        console.error("Ошибка при парсинге JSON:", error.message);
+        console.log("Ошибка при парсинге новых версий:", error.message);
     }
 
-    chrome.storage.local.set({ WikiHelperOldVSettings: this.checked })
-    if(this.checked) sendMsg({ WikiHelperIsCutActive: true });
-    else sendMsg({ WikiHelperIsCutActive: false });
+    chrome.storage.local.set({ WikiHelperNewVSettings: parsedData, WikiHelperNewVText: textContent });
+    sendMsg({ WikiHelperNewVSettings: parsedData });
 }
 
 function TextBoxOldVersionEventHandler() {
@@ -136,12 +149,10 @@ function TextBoxOldVersionEventHandler() {
     try {
         const jsonString = `{${textContent}}`;
         parsedData = JSON.parse(jsonString);
-        console.log(parsedData);
     } catch (error) {
-        console.error("Ошибка при парсинге JSON:", error.message);
+        console.log("Ошибка при парсинге старых версий:", error.message);
     }
 
-    chrome.storage.local.set({ WikiHelperOldVSettings: parsedData, WikiHelperOldVText: textContent })
+    chrome.storage.local.set({ WikiHelperOldVSettings: parsedData, WikiHelperOldVText: textContent });
     sendMsg({ WikiHelperOldVSettings: parsedData });
 }
-
