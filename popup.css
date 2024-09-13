@@ -5,7 +5,7 @@ body {
     padding: 20px;
     background-color: #f0f4f8;
     color: #333;
-    width: 400px;
+    width: 350px;
 }
 
 /* Стили для контейнера настроек */
@@ -68,7 +68,7 @@ input[type="checkbox"]:checked + .toggle span {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    max-height: 100%; /* Достаточно большая высота для отображения содержимого */
+    max-height: 100%;
 }
 
 #versionsDiv.collapsed {
@@ -161,7 +161,6 @@ input[type="checkbox"]:checked + .toggle span {
 
 .TextBox {
     width: 500px;
-    height: 70px;
     background: #f5f5f5;
     border: 1px solid #ddd;
     padding: 5px;
@@ -177,33 +176,10 @@ input[type="checkbox"]:checked + .toggle span {
 }
 
 .infoVersion {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: none !important;
     width: 100%;
-}
-
-.infoVersionCheckMarkContainer{
-    border: none !important;
-    width: 20px !important;
-    padding: 0;
-}
-
-#_checkbox {
-    display: none;
-}
-
-.checkMark {
-  width: 20px;
-  height: 20px;
-  background-color: #f72414;
-  border-radius: 50%;
-  box-shadow: 0 7px 10px #ffbeb8;
-  cursor: pointer;
-  transition: 0.2s ease transform, 0.2s ease background-color,
-    0.2s ease box-shadow;
-  overflow: hidden;
-}
-
-#_checkbox:checked + label {
-    background-color: #07d410;
-    box-shadow: 0 7px 10px #92ff97;
 }

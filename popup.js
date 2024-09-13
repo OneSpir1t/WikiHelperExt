@@ -1,5 +1,6 @@
 const CurrentState = {};
 const controls = {};
+const values = ["WikiHelperIsCutActive", "WikiHelperIsToggled", "WikiHelperOldVSettings", "WikiHelperNewVSettings", "WikiHelperOldVText", "WikiHelperNewVText"];
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(!controls.content) return;
 
-    chrome.storage.local.get(["WikiHelperIsCutActive", "WikiHelperIsToggled", "WikiHelperOldVSettings", "WikiHelperNewVSettings", "WikiHelperOldVText", "WikiHelperNewVText"]).then((result) => {
+    chrome.storage.local.get(values).then((result) => {
         Object.assign(CurrentState, result);
         ManiSettingsInit();
         versionSettingInit();
@@ -108,8 +109,7 @@ function hidePreLoader() {
     }
 }
 
-function verticalTextBoxesSettingsInit(){
-    
+function verticalTextBoxesSettingsInit(){ 
     if (CurrentState.WikiHelperOldVText) controls.verticalTextBoxOldV.textContent = CurrentState.WikiHelperOldVText;
     else controls.verticalTextBoxOldV.textContent = '';
 
@@ -120,7 +120,7 @@ function verticalTextBoxesSettingsInit(){
 }
 
 function TextBoxNewVersionEventHandler() {
-    let textContent = controls.verticalTextBoxNewV.textContent.trim();
+    let textContent = controls.verticalTextBoxNewV.textContent.replace(/\s+/g, ' ').trim();
 
     if (textContent.endsWith(',')) {
         textContent = textContent.slice(0, -1);
@@ -134,12 +134,13 @@ function TextBoxNewVersionEventHandler() {
         console.log("Ошибка при парсинге новых версий:", error.message);
     }
 
-    chrome.storage.local.set({ WikiHelperNewVSettings: parsedData, WikiHelperNewVText: textContent });
-    sendMsg({ WikiHelperNewVSettings: parsedData });
+    chrome.storage.local.set({ WikiHelperNewVSettings: parsedData, WikiHelperNewVText: textContent }).then(() => {
+        sendMsg({WikiHelperNewVSettings: true});
+    });
 }
 
 function TextBoxOldVersionEventHandler() {
-    let textContent = controls.verticalTextBoxOldV.textContent.trim();
+    let textContent = controls.verticalTextBoxOldV.textContent.replace(/\s+/g, ' ').trim();
 
     if (textContent.endsWith(',')) {
         textContent = textContent.slice(0, -1);
@@ -153,6 +154,7 @@ function TextBoxOldVersionEventHandler() {
         console.log("Ошибка при парсинге старых версий:", error.message);
     }
 
-    chrome.storage.local.set({ WikiHelperOldVSettings: parsedData, WikiHelperOldVText: textContent });
-    sendMsg({ WikiHelperOldVSettings: parsedData });
+    chrome.storage.local.set({ WikiHelperOldVSettings: parsedData, WikiHelperOldVText: textContent }).then(() => {
+        sendMsg({ WikiHelperOldVSettings: true });
+    });
 }
