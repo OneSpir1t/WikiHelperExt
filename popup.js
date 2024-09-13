@@ -91,11 +91,7 @@ async function setControls() {
     controlsToAdd.verticalTextBoxNewV = verticalTextBoxNewV;
     controlsToAdd.verticalTextBoxOldV = verticalTextBoxOldV;
     Object.keys(controlsToAdd).forEach(key => {
-        if (!(key in controls)) {
-            controls[key] = controlsToAdd[key];
-        } else {
-            console.warn(`Property ${key} already exists in controls.`);
-        }
+        if (!(key in controls)) controls[key] = controlsToAdd[key];
     });
 }
 

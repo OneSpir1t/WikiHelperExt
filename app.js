@@ -65,46 +65,36 @@ function VersionsAttention(LibName) {
   if(newVersionEl){
     const siblings = [...newVersionEl.parentNode.children].filter(elem => elem.id != 'toc');
     siblings.forEach(elem => {
-      elem.style.background = '#ffffff'
+      elem.style.background = '#ffffff';
     })
-    console.log(siblings);
     const indexOfFirstH3 = siblings.findIndex(elem => isCasts(elem, NewV));
     const indexOfSecondH3 =  siblings.findIndex(elem => isCasts(elem, OldV));
-    const betweenELems = siblings.slice(indexOfFirstH3 + 1, indexOfSecondH3)
-    console.log(indexOfFirstH3, indexOfSecondH3, NewV, OldV);
-    if(indexOfFirstH3 > indexOfSecondH3) return;
-    const anchors = document.getElementsByClassName('toctext')
+    const betweenELems = siblings.slice(indexOfFirstH3 + 1, indexOfSecondH3);
     for (let i = 0; anchors.length > i; i++){
-      anchors[i].style.color = '#0645ad'
-      if (isCasts(anchors[i], NewV) || isCasts(anchors[i], OldV)) anchors[i].style.color = 'green'
+      anchors[i].style.color = '#0645ad';
+      if (isCasts(anchors[i], NewV) || isCasts(anchors[i], OldV)) anchors[i].style.color = 'green';
     }
-    if (indexOfFirstH3 > 0) {
-      siblings[indexOfFirstH3].style.background = '#714955';
-    }
-    if (indexOfSecondH3 > 0) {
-      siblings[indexOfSecondH3].style.background = '#714955'
-    }
-    if (indexOfFirstH3 > 0 && indexOfSecondH3 > 0){
+    if (indexOfFirstH3 > indexOfSecondH3) return;
+    const anchors = document.getElementsByClassName('toctext');
+    if (indexOfFirstH3 > 0) siblings[indexOfFirstH3].style.background = '#714955';
+    if (indexOfSecondH3 > 0) siblings[indexOfSecondH3].style.background = '#714955';
+
+    if (indexOfFirstH3 > 0 && indexOfSecondH3 > 0) {
       betweenELems.forEach(elem => {
         elem.style.background = '#A0ECD0';
       })
     }
-  }
+  } else console.log('newVEl not founded');
 }
 
 function isCasts(element, version) {
-  if(element.innerText){
-    const TextArea = element.innerText.split(' ');  
+  if(element.innerText) {
+    const TextArea = element.innerText.replaceAll('[править]', '').split('-');  
     let finded = false;
     TextArea.forEach(elem => {
-      if(elem.trim() === 'Версия ' + version || elem.trim() === version){
-        console.log('finded', version)
-        finded = true;
-      }
+      if(elem.trim() === 'Версия ' + version || elem.trim() === version) finded = true; 
     })
     return finded;
   }
-  else {
-    return false
-  }
+  else return false;
 }
