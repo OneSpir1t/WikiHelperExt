@@ -5,4 +5,5 @@
 2. Enable 'developer mode' in chrome://extensions/
 3. Load unpacked extension
 4. Enjoy!
-extension for Chrome
+
+-extension for Chrome-
