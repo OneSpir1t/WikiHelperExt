@@ -70,12 +70,12 @@ function VersionsAttention(LibName) {
     const indexOfFirstH3 = siblings.findIndex(elem => isCasts(elem, NewV));
     const indexOfSecondH3 =  siblings.findIndex(elem => isCasts(elem, OldV));
     const betweenELems = siblings.slice(indexOfFirstH3 + 1, indexOfSecondH3);
+    const anchors = document.getElementsByClassName('toctext');
     for (let i = 0; anchors.length > i; i++){
       anchors[i].style.color = '#0645ad';
-      if (isCasts(anchors[i], NewV) || isCasts(anchors[i], OldV)) anchors[i].style.color = 'green';
+      if (isCasts(anchors[i], NewV) || isCasts(anchors[i], OldV)) anchors[i].parentElement.style.background = '#DDFC74';
     }
     if (indexOfFirstH3 > indexOfSecondH3) return;
-    const anchors = document.getElementsByClassName('toctext');
     if (indexOfFirstH3 > 0) siblings[indexOfFirstH3].style.background = '#714955';
     if (indexOfSecondH3 > 0) siblings[indexOfSecondH3].style.background = '#714955';
 
